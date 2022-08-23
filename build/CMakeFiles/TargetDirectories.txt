@@ -1,0 +1,3 @@
+/Users/vygl/Desktop/Desktop - Valley’s MacBook Pro (2)/graphics/metal/build/CMakeFiles/metal.dir
+/Users/vygl/Desktop/Desktop - Valley’s MacBook Pro (2)/graphics/metal/build/CMakeFiles/edit_cache.dir
+/Users/vygl/Desktop/Desktop - Valley’s MacBook Pro (2)/graphics/metal/build/CMakeFiles/rebuild_cache.dir
