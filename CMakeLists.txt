@@ -13,9 +13,11 @@ target_include_directories(metal SYSTEM PUBLIC ${CMAKE_SOURCE_DIR}/package/metal
 find_library(APPLE_FWK_FOUNDATION Foundation REQUIRED)
 find_library(APPLE_FWK_QUARTZ_CORE QuartzCore REQUIRED)
 find_library(APPLE_FWK_METAL Metal REQUIRED)
+find_library(APPLE_FWK_CORE_GRAPHICS CoreGraphics REQUIRED)
 
 target_link_libraries(metal
   ${APPLE_FWK_FOUNDATION}
   ${APPLE_FWK_QUARTZ_CORE}
   ${APPLE_FWK_METAL}
+  ${APPLE_FWK_CORE_GRAPHICS}
 )
