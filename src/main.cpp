@@ -37,6 +37,7 @@ int main() {
         throw std::runtime_error("Failed to find the function.");
     }
 
+    MTL::ComputePipelineDescriptor* pipelineDescriptor;
     // Creating the pipeline. Using different pipelines can load multiple functions to use when necessary.
     // TODO: A Descriptor is another option that can be used in the parameter, can specify and link buffers early.
     NS::Error* error = nullptr;
