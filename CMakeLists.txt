@@ -9,6 +9,7 @@ target_compile_features(metal PRIVATE cxx_std_20)
 
 target_include_directories(metal PRIVATE ${CMAKE_CURRENT_SOURCE_DIR}/includes)
 target_include_directories(metal SYSTEM PUBLIC ${CMAKE_SOURCE_DIR}/package/metal-cpp)
+target_include_directories(metal SYSTEM PUBLIC ${CMAKE_SOURCE_DIR}/package/metal-cpp-extensions)
 
 find_library(APPLE_FWK_FOUNDATION Foundation REQUIRED)
 find_library(APPLE_FWK_QUARTZ_CORE QuartzCore REQUIRED)

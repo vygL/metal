@@ -4,7 +4,9 @@
             "name": "Mac",
             "includePath": [
                 "${workspaceFolder}/**",
-                "${workspaceFolder}/package"
+                "${workspaceFolder}/package",
+                "${workspaceFolder}/includes",
+                "${workspaceFolder}/includes"
             ],
             "defines": [],
             "macFrameworkPath": [
@@ -13,7 +15,8 @@
             "compilerPath": "/usr/bin/clang",
             "cStandard": "c17",
             "cppStandard": "c++17",
-            "intelliSenseMode": "macos-clang-arm64"
+            "intelliSenseMode": "macos-clang-arm64",
+            "configurationProvider": "ms-vscode.cmake-tools"
         }
     ],
     "version": 4

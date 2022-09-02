@@ -1,8 +1,8 @@
 #ifndef APPLICATION_H
-#define APPLICAITON_H
+#define APPLICATION_H
 
 #include "Metal/Metal.hpp"
-#include "MetalKit/MetalKit.h"
+#include "MetalKit/MetalKit.hpp"
 
 class Application {
     public: 
@@ -10,7 +10,9 @@ class Application {
         ~Application();
 
     private:
-        
+        NS::AutoreleasePool* _pool;
+        MTL::Device* _device;
+
 
 };
 #endif
