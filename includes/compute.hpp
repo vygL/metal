@@ -13,13 +13,17 @@ class Compute {
         Compute(MTL::Device* device, const char* source);
         ~Compute();
 
-        void setup(MTL::Device* device);
-        bool attachDevice(MTL::Device* device) const;
-        bool addFunction(std::string func_name) const;
-        std::vector<MTL::Buffer*> setArgs(std::vector<auto> args)
-bool    bool process
+        void setup(const char* libSource);
+        bool attachDevice(MTL::Device* device, const char* libSource);
 
-bool    bool send
+        bool chooseFunc(const char* functionName);
+
+
+        template<typename T>
+        MTL::Buffer* setArgs(std::vector<T>& args, size_t returnSize);
+        bool process();
+
+        bool send();
         int add(int a, int b);
     private:
         MTL::Device* _device;
