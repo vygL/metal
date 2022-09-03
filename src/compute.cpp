@@ -62,6 +62,7 @@ MTL::Buffer* Compute::setArgs(std::vector<T>& args, size_t returnSize) {
     
     return result;
 }
+
 bool Compute::process() {
     NS::Error* error = nullptr;
     _state = _device->newComputePipelineState(_desc, MTL::PipelineOptionNone, nullptr, &error);
