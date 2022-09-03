@@ -8,3 +8,7 @@ Application::Application() {
 Application::~Application() {
     _pool->release();
 }
+
+MTL::Device* Application::device() {
+    return _device;
+}

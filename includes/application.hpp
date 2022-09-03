@@ -9,6 +9,7 @@ class Application {
         Application();
         ~Application();
 
+        MTL::Device* device();
     private:
         NS::AutoreleasePool* _pool;
         MTL::Device* _device;
