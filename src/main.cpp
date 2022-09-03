@@ -11,6 +11,13 @@
 int main() {
     Application* newApp = new Application();
     Compute* compute = new Compute(newApp->device(), add_func);
+
+    compute->chooseFunc("add");
+    std::vector<auto> args = { 1.0,
+                               2.0};
+    compute->setArgs(args, sizeof(float_t));
+    compute->process();
+    compute->send();
     return 0;
 
 }

@@ -22,7 +22,15 @@ bool    bool process
 bool    bool send
         int add(int a, int b);
     private:
-       NS::AutoreleasePool* pool_;
-       MTL::Library* _library;
+        MTL::Device* _device;
+
+        NS::AutoreleasePool* pool_;
+        MTL::Library* _library;
+        MTL::CommandQueue* _queue;
+        MTL::CommandBuffer* _buffer;
+        MTL::ComputeCommandEncoder* _encoder;
+
+        MTL::ComputePipelineState* _state;
+        MTL::ComputePipelineDescriptor* _desc;
 };
 #endif
