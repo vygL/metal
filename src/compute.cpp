@@ -4,14 +4,14 @@ Compute::Compute() {
 
 }
 
-Compute::Compute(MTL::Device* device, const char* libSource) {
+Compute::Compute(MTL::Device* device, const char* libSource, size_t returnSize) {
     pool_ = NS::AutoreleasePool::alloc()->init();
     _device = device;
-    setup(libSource);
+    setup(libSource, returnSize);
 
 }
 
-void Compute::setup(const char* libSource) {
+void Compute::setup(const char* libSource, size_t returnSize) {
     if (!_device) {
         std::cerr << "Unable to perform setup without first linking device";
         std::exit(-1);
@@ -19,17 +19,21 @@ void Compute::setup(const char* libSource) {
 
     NS::Error* error = nullptr;
     _library = _device->newLibrary(NS::String::string(libSource, NS::StringEncoding::ASCIIStringEncoding), nullptr, &error);
-
+    if (!_library) {
+        std::cerr << "Library" << error->localizedDescription()->utf8String() << std::endl;
+    }
     _queue = _device->newCommandQueue();
     _buffer = _queue->commandBuffer();
     _encoder = _buffer->computeCommandEncoder();
     _desc = MTL::ComputePipelineDescriptor::alloc()->init();
     _desc->setLabel(NS::String::string("Compute_Pass", NS::StringEncoding::ASCIIStringEncoding));
+
+    _result = _device->newBuffer(returnSize, MTL::ResourceStorageModeShared);
 }
 
-bool Compute::attachDevice(MTL::Device* device, const char* libSource) {
+bool Compute::attachDevice(MTL::Device* device, const char* libSource, size_t returnSize) {
     _device = device;
-    setup(libSource);
+    setup(libSource, returnSize);
 
     return 1;
 }
@@ -37,9 +41,10 @@ bool Compute::attachDevice(MTL::Device* device, const char* libSource) {
 // TODO: To reuse pipelines by setting to different functions, or make one for each?
 
 bool Compute::chooseFunc(const char* functionName) {
+    NS::Error* error = nullptr;
     MTL::Function* addFunction = _library->newFunction(NS::String::string(functionName, NS::StringEncoding::ASCIIStringEncoding));
     if (!addFunction) {
-        std::cerr << "Failed to link function";
+        std::cerr << "Function " << error->localizedDescription()->utf8String() << std::endl;
         std::exit(-1);
     }
     _desc->setComputeFunction(addFunction);
@@ -63,6 +68,10 @@ MTL::Buffer* Compute::setArgs(std::vector<T>& args, size_t returnSize) {
     return result;
 }
 
+MTL::ComputeCommandEncoder* Compute::encoder() {
+    return _encoder;
+}
+
 bool Compute::process() {
     NS::Error* error = nullptr;
     _state = _device->newComputePipelineState(_desc, MTL::PipelineOptionNone, nullptr, &error);
@@ -70,7 +79,7 @@ bool Compute::process() {
         std::cerr << "State error";
     }
 
-    MTL::Size gridSize = MTL::Size::Make(1, 1, 1);
+    MTL::Size gridSize = MTL::Size::Make(3, 1, 1);
     NS::UInteger threadGroupSize = _state->maxTotalThreadsPerThreadgroup();
     MTL::Size threadgroupSize = MTL::Size::Make(threadGroupSize, 1, 1);
 
@@ -85,6 +94,7 @@ bool Compute::send() {
     _buffer->commit();
 
     _buffer->waitUntilCompleted();
+
 
     return 1;
 }

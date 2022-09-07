@@ -10,19 +10,19 @@
 class Compute {
     public:
         Compute();
-        Compute(MTL::Device* device, const char* source);
+        Compute(MTL::Device* device, const char* source, size_t returnSize);
         ~Compute();
 
-        void setup(const char* libSource);
-        bool attachDevice(MTL::Device* device, const char* libSource);
+        void setup(const char* libSource, size_t returnSize);
+        bool attachDevice(MTL::Device* device, const char* libSource, size_t returnSize);
 
         bool chooseFunc(const char* functionName);
 
 
         template<typename T>
         MTL::Buffer* setArgs(std::vector<T>& args, size_t returnSize);
+        MTL::ComputeCommandEncoder* encoder();
         bool process();
-
         bool send();
         int add(int a, int b);
     private:
@@ -36,5 +36,7 @@ class Compute {
 
         MTL::ComputePipelineState* _state;
         MTL::ComputePipelineDescriptor* _desc;
+
+        MTL::Buffer* _result;
 };
 #endif
